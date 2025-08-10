@@ -1,81 +1,74 @@
-```markdown
-# 🔥 Venom Forge - Advanced Android Payload Generator
+# VenomForge 2.0
 
-![Version](https://img.shields.io/badge/Version-1.0-blue) 
-![Platform](https://img.shields.io/badge/Platform-Termux-green)
-![License](https://img.shields.io/badge/License-MIT-orange)
+VenomForge é um gerador moderno e interativo de payloads para Metasploit, desenvolvido para facilitar a criação rápida de arquivos maliciosos para pentest e testes de segurança. Com interface colorida, menus intuitivos e suporte a múltiplos sistemas operacionais, o VenomForge torna o processo de geração de payloads simples e eficiente.
 
-Venom Forge é uma solução completa para pentesting em dispositivos móveis, oferecendo automação avançada para criação de payloads Android diretamente no Termux.
+## Características
 
-## 🌟 Recursos Premium
+- **Interface interativa e colorida no terminal**
+- **Geração de payloads para Windows, Linux, Android, MacOS e iOS**
+- **Validação automática de dependências**
+- **Simulação de gerenciamento de sessões e utilitários**
+- **Compatível com Termux, Linux e ambientes Unix-like**
+- **Pronto para expansão de funcionalidades**
 
-- 🚀 **Instalação 1-Click** do Metasploit Framework
-- 🛠️ **Geração de Payloads** APK altamente configuráveis:
-  - Meterpreter Reverse TCP
-  - Bind Shell
-  - Persistência automática
-- 🔄 **Tunelamento Integrado** (Ngrok/Localhost)
-- 🎨 **Interface Moderna** com:
-  - Menus interativos
-  - Visualização em tempo real
-  - Códigos de cores intuitivos
-- 📊 **Gerenciamento de Sessões** avançado
+## Pré-requisitos
 
-## 🖥️ Demonstração
-```bash
-[+] Configurando LHOST: 192.168.1.105
-[+] Configurando LPORT: 4444
-[+] Construindo payload evasivo...
-[✔] Payload gerado: venom_payload.apk (3.2MB)
-```
+- **Python 3.x**
+- **Metasploit Framework** (`msfvenom` e `msfconsole` disponíveis no PATH)
+- **nmap** instalado
+- **prettytable** (instale com `pip install prettytable`)
 
-## 🛠️ Instalação Rápida
+## Instalação
 
 ```bash
 # Clone o repositório
 git clone https://github.com/Mtx-rng/VenomForge-v1.git
-
-# Acesse o diretório
 cd VenomForge-v1
 
-# Execute o instalador
-python3 VenomForge.py --install
+# Instale o prettytable
+pip install prettytable
+
+# No Termux ou Linux, instale o Metasploit e nmap:
+pkg install unstable-repo
+pkg install metasploit
+pkg install nmap
 ```
 
-## 📌 Como Usar
+## Uso
 
-1. **Configuração Inicial**:
-   ```bash
-   python3 VenomForge.py --setup
-   ```
+```bash
+python VenomForge.py
+```
 
-2. **Geração de Payload**:
-   ```bash
-   python3 VenomForge.py --generate
-   ```
+Siga os menus interativos para gerar payloads.  
+Ao escolher um alvo, insira o IP (`LHOST`) e a porta (`LPORT`) para o payload.  
+O arquivo será salvo na pasta atual com o nome informado.
 
-3. **Listener Automático**:
-   ```bash
-   python3 VenomForge.py --listen
-   ```
+### Exemplos de geração de payload
 
-## ⚠️ Aviso Legal
-Este software é destinado exclusivamente para:
-- Testes de penetração autorizados
-- Pesquisa em segurança cibernética
-- Educação em defesa digital
+- **Windows**: Gera um `.exe` Meterpreter Reverse TCP
+- **Linux**: Gera um `.elf` Meterpreter Reverse TCP
+- **Android**: Gera um `.apk` Meterpreter Reverse TCP
+- **MacOS**: Gera um binário `.macho`
+- **iOS**: Gera um binário `.bin` (experimenta, depende do suporte do msfvenom)
 
-**O uso não autorizado é ilegal.**
+## Segurança
 
-## 🤝 Contribuição
-Contribuições são bem-vindas via:
-- Issues no GitHub
-- Pull Requests
-- Sugestões na comunidade
+**ATENÇÃO:**  
+Este projeto é exclusivamente para fins educacionais e de testes em ambientes autorizados.  
+Não utilize o VenomForge para atividades ilegais ou sem permissão explícita dos donos dos sistemas alvo.
 
-## 📜 Licença
-MIT License - Consulte o arquivo LICENSE para detalhes.
+Nunca compartilhe ou publique arquivos gerados em ambientes públicos não controlados!
+
+## Contribuição
+
+Sinta-se à vontade para abrir issues, sugerir melhorias ou enviar pull requests!
+
+## Licença
+
+MIT
 
 ---
-© 2024 Therac-25 | [GitHub](https://github.com/Mtx-rng)
-```
+
+**Autor:** Therac-25  
+**GitHub:** [Mtx-rng](https://github.com/Mtx-rng)
