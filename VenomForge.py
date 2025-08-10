@@ -13,7 +13,7 @@ def clear():
 
 def banner():
     clear()
-    print(CY+"""
+    print(CY+r"""
                          __    _
                     _wr""        "-q__
                  _dP                 9m_
@@ -37,15 +37,15 @@ def banner():
      .               _d#####^#####m__              ,
       "*w_________am#####P"   ~9#####mw_________w*"
           ""9@#####@M""           ""P@#####@M""
-"""+Y+"""
-       [--> """+R+"""VenomForge v1.0 """+Y+"""<--]
-"""+G+"""
+""" + Y + """
+       [--> """ + R + """VenomForge v1.0 """ + Y + """<--]
+""" + G + """
     Author: Therac-25
-"""+CY+"""
->> Payload generator for Metasploit <<"""+W+"""\n""")
+""" + CY + """
+>> Payload generator for Metasploit <<""" + W + "\n")
 
 def main_menu():
-    print(R+"""
+    print(R + """
 ************************************************
 """ + CY + """
 >>> Main Menu
@@ -54,10 +54,10 @@ def main_menu():
 2) Start Listener
 3) Install Metasploit
 4) Exit
-"""+W)
+""" + W)
 
 def os_menu():
-    print(R+"""
+    print(R + """
 ************************************************
 """ + CY + """
 >>> Select target OS
@@ -66,10 +66,10 @@ def os_menu():
 2) Windows
 3) Linux
 99) Back
-"""+W)
+""" + W)
 
 def windows_payload_menu():
-    print(R+"""
+    print(R + """
 ************************************************
 """ + CY + """
 >>> Select Windows payload
@@ -83,10 +83,10 @@ def windows_payload_menu():
 7) windows/powershell_reverse_tcp
 8) windows/x64/powershell_reverse_tcp
 99) Back
-"""+W)
+""" + W)
 
 def linux_payload_menu():
-    print(R+"""
+    print(R + """
 ************************************************
 """ + CY + """
 >>> Select Linux payload
@@ -96,7 +96,7 @@ def linux_payload_menu():
 3) linux/x86/shell/reverse_tcp
 4) linux/x64/shell/reverse_tcp
 99) Back
-"""+W)
+""" + W)
 
 def create_payload(lhost, lport, payload_name, prefix, ext):
     os.makedirs("payload", exist_ok=True)
@@ -138,13 +138,9 @@ def start_handler():
 
 def install_metasploit():
     print(G + "\n[+] Installing Metasploit...\n" + W)
-    # Instala wget
     os.system("pkg install wget -y")
-    # Baixa o instalador
     os.system("wget https://github.com/gushmazuko/metasploit_in_termux/raw/master/metasploit.sh")
-    # Permissão
     os.system("chmod +x metasploit.sh")
-    # Executa instalação
     os.system("./metasploit.sh")
     print(G + "\n[✔] Metasploit installation script finished (check for errors above).\n" + W)
 
@@ -228,5 +224,5 @@ if __name__ == "__main__":
         print(R + "Please run this script with Python 3." + W)
         sys.exit()
     main()
-    
+
 # venomforge v1
