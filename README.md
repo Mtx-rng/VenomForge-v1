@@ -1,85 +1,98 @@
-Venom Forge
+```markdown
+# 🔥 Venom Forge - Advanced Android Payload Generator
 
-Venom Forge é um script automatizado para Termux que facilita a instalação do framework Metasploit e a geração de payloads Android (APK) utilizando o msfvenom.
+![Banner](https://img.shields.io/badge/Version-1.0-blue) 
+![Platform](https://img.shields.io/badge/Platform-Termux-green)
+![License](https://img.shields.io/badge/License-MIT-orange)
 
+Venom Forge é uma solução completa para pentesting em dispositivos móveis, oferecendo automação avançada para criação de payloads Android diretamente no Termux.
 
----
+## 🌟 Recursos Premium
 
-Funcionalidades
+- 🚀 **Instalação 1-Click** do Metasploit Framework
+- 🛠️ **Geração de Payloads** APK altamente configuráveis:
+  - Meterpreter Reverse TCP
+  - Bind Shell
+  - Persistência automática
+- 🔄 **Tunelamento Integrado** (Ngrok/Localhost)
+- 🎨 **Interface Moderna** com:
+  - Menus interativos
+  - Visualização em tempo real
+  - Códigos de cores intuitivos
+- 📊 **Gerenciamento de Sessões** avançado
 
-Instalação automática do Metasploit no Termux, configurando o ambiente para uso imediato;
+## 🖥️ Demonstração
+```
+[+] Configurando LHOST: 192.168.1.105
+[+] Configurando LPORT: 4444
+[+] Construindo payload evasivo...
+[✔] Payload gerado: venom_payload.apk (3.2MB)
+```
 
-Geração automatizada de payloads Android com parâmetros personalizados (LHOST e LPORT);
+## 🛠️ Instalação Rápida
 
-Criação de arquivos .apk prontos para testes de invasão com payloads Meterpreter reverse TCP;
-
-Interface amigável com banners ASCII coloridos para melhor experiência visual;
-
-Opção para iniciar o console do Metasploit (msfconsole) diretamente após a instalação;
-
-Ideal para pentesters e entusiastas de segurança que atuam em ambientes Android.
-
-
-
----
-
-Como usar
-
-1. Baixe e execute o script para instalar o Metasploit:
-
-
+```bash
+# Clone o repositório
 git clone https://github.com/Mtx-rng/VenomForge-v1.git
 
-python3 venomforge.py
+# Acesse o diretório
+cd VenomForge-v1
 
-2. Configure o LHOST (IP local ou público) e LPORT (porta de escuta) quando solicitado;
+# Execute o instalador
+python3 venomforge.py --install
+```
 
+## 📌 Guia de Uso
 
-3. Gere seu payload .apk pronto para uso em testes;
+1. **Configuração Inicial**:
+   ```bash
+   python3 venomforge.py --setup
+   ```
 
+2. **Geração de Payload**:
+   ```bash
+   python3 venomforge.py --generate
+   ```
 
-4. Utilize o msfconsole para iniciar o listener e controlar as sessões.
+3. **Opções Avançadas**:
+   ```bash
+   python3 venomforge.py --advanced
+   ```
 
+## 🧩 Requisitos do Sistema
 
+| Componente | Versão Mínima |
+|------------|---------------|
+| Termux     | 0.118+        |
+| Python     | 3.9+          |
+| Storage    | 500MB livres  |
+| RAM        | 2GB+          |
 
+## ⚠️ Aviso Legal
+Este projeto destina-se **exclusivamente** para:
+- Testes de penetração autorizados
+- Pesquisa em segurança cibernética
+- Educação em defesa digital
+
+**O uso indevido é estritamente proibido.**
+
+## 🤝 Contribuição
+Contribuições são bem-vindas! Siga nosso guia:
+1. Fork o repositório
+2. Crie sua branch (`git checkout -b feature/incrivel`)
+3. Commit suas mudanças (`git commit -am 'Add incrível feature'`)
+4. Push para a branch (`git push origin feature/incrivel`)
+5. Abra um Pull Request
+
+## 📌 Roadmap 2024
+- [X] Suporte a múltiplos payloads
+- [ ] Integração com Cloudflare Tunnels
+- [ ] Builder Web embutido
+- [ ] Modo Stealth avançado
+
+## 📜 Licença
+Distribuído sob licença MIT. Veja `LICENSE` para mais informações.
 
 ---
-
-Requisitos
-
-Termux atualizado no Android;
-
-Python3 
-
-Conexão estável com a internet para download do Metasploit;
-
-Permissões necessárias para execução do script.
-
-
-
----
-
-Aviso Legal ⚠️
-
-Utilize esta ferramenta apenas para fins legais e autorizados, como testes de penetração em sistemas que você possui ou tem permissão expressa para testar. O uso indevido pode acarretar consequências legais.
-
-
----
-
-Contribuições
-
-Dúvidas, sugestões ou melhorias são bem-vindas! Abra uma issue ou envie um pull request.
-
-
----
-
-Autor Mtx-rng
-
-Desenvolvido por Therac-25
-
-
----
-
-Licença
-
-Este projeto está licenciado sob a MIT License.
+Desenvolvido com ❤️ por [Therac-25](https://github.com/Mtx-rng) | Mantido pela comunidade de segurança
+```
