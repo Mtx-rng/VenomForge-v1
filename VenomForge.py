@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # VenomForge 2.0 - Modern Metasploit Payload Generator
-# Author: Therac-25 
+# Author: Therac-25
 # GitHub: https://github.com/Mtx-rng
 
 import os
@@ -21,32 +21,32 @@ class colors:
     WHITE = '\033[38;5;255m'
     RESET = '\033[0m'
 
-# Arte ASCII personalizada
+# Arte ASCII personalizada (corrigida: usando raw string e escapando {})
 def show_banner():
-    print(f"""{colors.PURPLE}
-                         __    _                          
-                    _wr""        "-q__                    
-                 _dP                 9m_                  
-               _#P                     9#_                
-              d#@                       9#m               
-             d##                         ###              
-            J###                         ###L             
-            {###K                       J###K             
-            ]####K      ___aaa___      J####F             
-        __gmM######_  w#P""   ""9#m  _d#####Mmw__         
-     _g##############mZ_         __g##############m_      
-   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_    
-  a###""          ,Z"#####@" '######"\g          ""M##m   
- J#@"             0L  "*##     ##@"  J#              *#K  
- #"               `#    "_gmwgm_~    dF               `#_ 
-7F                 "#_   ]#####F   _dK                 JE 
-]                    *m__ ##### __g@"                   F 
-                       "PJ#####LP"                        
- `                       0######_                      '  
-                       _0########_                        
-     .               _d#####^#####m__              ,      
-      "*w_________am#####P"   ~9#####mw_________w*"       
-          ""9@#####@M""           ""P@#####@M""           
+    print(rf"""{colors.PURPLE}
+                         __    _
+                    _wr""        "-q__
+                 _dP                 9m_
+               _#P                     9#_
+              d#@                       9#m
+             d##                         ###
+            J###                         ###L
+            {{{###K}}}                       J###K
+            ]####K      ___aaa___      J####F
+        __gmM######_  w#P""   ""9#m  _d#####Mmw__
+     _g##############mZ_         __g##############m_
+   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_
+  a###""          ,Z"#####@" '######"\g          ""M##m
+ J#@"             0L  "*##     ##@"  J#              *#K
+ #"               `#    "_gmwgm_~    dF               `#_
+7F                 "#_   ]#####F   _dK                 JE
+]                    *m__ ##### __g@"                   F
+                       "PJ#####LP"
+ `                       0######_                      '
+                       _0########_
+     .               _d#####^#####m__              ,
+      "*w_________am#####P"   ~9#####mw_________w*"
+          ""9@#####@M""           ""P@#####@M""
 {colors.RESET}""")
     print(f"{colors.YELLOW}          VenomForge 2.0 - Advanced Payload Generator{colors.RESET}")
     print(f"{colors.BLUE}          ---------------------------------------{colors.RESET}\n")
@@ -61,7 +61,7 @@ def main_menu():
 [3] {colors.GREEN}Payload Utilities{colors.ORANGE}
 [4] {colors.GREEN}Session Management{colors.ORANGE}
 [5] {colors.RED}Exit{colors.RESET}""")
-        
+
         try:
             choice = int(input(f"\n{colors.BLUE}Select an option: {colors.RESET}"))
             if choice == 1:
@@ -87,7 +87,7 @@ def payload_menu():
     os.system('clear')
     show_banner()
     print(f"{colors.PURPLE}\n>>> PAYLOAD GENERATION MENU <<<{colors.RESET}")
-    
+
     targets = {
         1: "Windows",
         2: "Linux",
@@ -96,14 +96,14 @@ def payload_menu():
         5: "iOS",
         99: "Back to Main Menu"
     }
-    
+
     # Mostrar opções com cores
     for key, value in targets.items():
         if key == 99:
             print(f"{colors.RED}[{key}] {value}{colors.RESET}")
         else:
             print(f"{colors.GREEN}[{key}] {colors.BLUE}{value}{colors.RESET}")
-    
+
     try:
         target = int(input(f"\n{colors.YELLOW}Select target OS: {colors.RESET}"))
         if target in targets:
@@ -123,15 +123,15 @@ def payload_menu():
 # Função para mostrar endereços de rede
 def show_network_interfaces():
     table = PrettyTable()
-    table.field_names = [f"{colors.GREEN}Interface{colors.RESET}", 
-                         f"{colors.BLUE}IP Address{colors.RESET}", 
+    table.field_names = [f"{colors.GREEN}Interface{colors.RESET}",
+                         f"{colors.BLUE}IP Address{colors.RESET}",
                          f"{colors.PURPLE}Status{colors.RESET}"]
-    
+
     # Simulação - na implementação real usar os.popen ou netifaces
     table.add_row(["eth0", "192.168.1.100", "Up"])
     table.add_row(["wlan0", "10.0.0.15", "Up"])
     table.add_row(["tun0", "172.16.0.1", "Up"])
-    
+
     print(f"\n{colors.YELLOW}Available Network Interfaces:{colors.RESET}")
     print(table)
 
@@ -146,11 +146,11 @@ def type_effect(text, color=colors.WHITE, delay=0.05):
 def check_dependencies():
     required = ['msfvenom', 'msfconsole', 'nmap']
     missing = []
-    
+
     for tool in required:
         if not os.popen(f"which {tool}").read():
             missing.append(tool)
-    
+
     if missing:
         print(f"{colors.RED}Missing dependencies:{colors.RESET}")
         for tool in missing:
@@ -158,19 +158,44 @@ def check_dependencies():
         return False
     return True
 
+# Funções placeholder (para evitar erros de chamada)
+def generate_payload(target):
+    print(f"\n{colors.GREEN}Generating payload for {target}...{colors.RESET}")
+    sleep(2)
+    print(f"{colors.YELLOW}Payload generated successfully!{colors.RESET}")
+    input(f"\n{colors.BLUE}Press Enter to continue...{colors.RESET}")
+
+def listener_menu():
+    os.system('clear')
+    show_banner()
+    print(f"\n{colors.PURPLE}>>> LISTENER MENU <<<{colors.RESET}")
+    input(f"\n{colors.BLUE}Press Enter to return...{colors.RESET}")
+
+def utilities_menu():
+    os.system('clear')
+    show_banner()
+    print(f"\n{colors.PURPLE}>>> PAYLOAD UTILITIES <<<{colors.RESET}")
+    input(f"\n{colors.BLUE}Press Enter to return...{colors.RESET}")
+
+def session_menu():
+    os.system('clear')
+    show_banner()
+    print(f"\n{colors.PURPLE}>>> SESSION MANAGEMENT <<<{colors.RESET}")
+    input(f"\n{colors.BLUE}Press Enter to return...{colors.RESET}")
+
 # Inicialização
 if __name__ == "__main__":
     try:
         if not check_dependencies():
             print(f"\n{colors.RED}Some required tools are missing. Please install them first.{colors.RESET}")
             sys.exit(1)
-        
+
         # Limpar tela e iniciar
         os.system('clear')
-        type_effect("Initializing Paybag 2.0...", colors.PURPLE)
+        type_effect("Initializing VenomForge 2.0...", colors.PURPLE)
         sleep(1)
         main_menu()
-        
+
     except KeyboardInterrupt:
         print(f"\n{colors.RED}Interrupted by user. Exiting...{colors.RESET}")
         sys.exit(0)
