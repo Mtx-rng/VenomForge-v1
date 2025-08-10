@@ -30,7 +30,9 @@ Como usar
 
 
 git clone https://github.com/Mtx-rng/VenomForge-v1.git
+
 chmod +x venomforge.sh
+
 ./venomforge.sh
 
 2. Configure o LHOST (IP local ou público) e LPORT (porta de escuta) quando solicitado;
