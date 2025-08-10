@@ -28,10 +28,7 @@ Como usar
 1. Baixe e execute o script para instalar o Metasploit:
 
 
-
 git clone https://github.com/Mtx-rng/VenomForge-v1.git
-
-chmod +x venomforge.py
 
 python3 venomforge.py
 
@@ -51,6 +48,8 @@ python3 venomforge.py
 Requisitos
 
 Termux atualizado no Android;
+
+Python3 
 
 Conexão estável com a internet para download do Metasploit;
 
