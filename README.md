@@ -29,7 +29,7 @@ Como usar
 
 
 
-wget https://github.com/Mtx-rng/VenomForge-v1/raw/main/venomforge.sh
+git clone https://github.com/Mtx-rng/venomforge.git
 chmod +x venomforge.sh
 ./venomforge.sh
 
