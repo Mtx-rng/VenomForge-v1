@@ -21,9 +21,9 @@ class colors:
     WHITE = '\033[38;5;255m'
     RESET = '\033[0m'
 
-# Arte ASCII personalizada (corrigida: usando raw string e escapando {})
+# Arte ASCII personalizada (versão segura)
 def show_banner():
-    print(rf"""{colors.PURPLE}
+    print(colors.PURPLE + r"""
                          __    _
                     _wr""        "-q__
                  _dP                 9m_
@@ -31,7 +31,7 @@ def show_banner():
               d#@                       9#m
              d##                         ###
             J###                         ###L
-            {{{###K}}}                       J###K
+            {###K                       J###K
             ]####K      ___aaa___      J####F
         __gmM######_  w#P""   ""9#m  _d#####Mmw__
      _g##############mZ_         __g##############m_
@@ -47,7 +47,7 @@ def show_banner():
      .               _d#####^#####m__              ,
       "*w_________am#####P"   ~9#####mw_________w*"
           ""9@#####@M""           ""P@#####@M""
-{colors.RESET}""")
+""" + colors.RESET)
     print(f"{colors.YELLOW}          VenomForge 2.0 - Advanced Payload Generator{colors.RESET}")
     print(f"{colors.BLUE}          ---------------------------------------{colors.RESET}\n")
 
