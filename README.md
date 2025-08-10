@@ -39,24 +39,24 @@ git clone https://github.com/Mtx-rng/VenomForge-v1.git
 cd VenomForge-v1
 
 # Execute o instalador
-python3 venomforge.py --install
+python3 VenomForge.py --install
 ```
 
 ## 📌 Como Usar
 
 1. **Configuração Inicial**:
    ```bash
-   python3 venomforge.py --setup
+   python3 VenomForge.py --setup
    ```
 
 2. **Geração de Payload**:
    ```bash
-   python3 venomforge.py --generate
+   python3 VenomForge.py --generate
    ```
 
 3. **Listener Automático**:
    ```bash
-   python3 venomforge.py --listen
+   python3 VenomForge.py --listen
    ```
 
 ## ⚠️ Aviso Legal
