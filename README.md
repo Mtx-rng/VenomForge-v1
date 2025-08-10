@@ -1,4 +1,4 @@
-#Venom Forge
+Venom Forge
 
 Venom Forge é um script automatizado para Termux que facilita a instalação do framework Metasploit e a geração de payloads Android (APK) utilizando o msfvenom.
 
@@ -72,7 +72,7 @@ Dúvidas, sugestões ou melhorias são bem-vindas! Abra uma issue ou envie um pu
 
 ---
 
-Autor
+Autor Mtx-rng
 
 Desenvolvido por Therac-25
 
