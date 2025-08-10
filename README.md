@@ -29,7 +29,7 @@ Como usar
 
 
 
-git clone https://github.com/Mtx-rng/venomforge.git
+git clone https://github.com/Mtx-rng/VenomForge-v1.git
 chmod +x venomforge.sh
 ./venomforge.sh
 
