@@ -1,7 +1,7 @@
 ```markdown
 # 🔥 Venom Forge - Advanced Android Payload Generator
 
-![Banner](https://img.shields.io/badge/Version-1.0-blue) 
+![Version](https://img.shields.io/badge/Version-1.0-blue) 
 ![Platform](https://img.shields.io/badge/Platform-Termux-green)
 ![License](https://img.shields.io/badge/License-MIT-orange)
 
@@ -22,7 +22,7 @@ Venom Forge é uma solução completa para pentesting em dispositivos móveis, o
 - 📊 **Gerenciamento de Sessões** avançado
 
 ## 🖥️ Demonstração
-```
+```bash
 [+] Configurando LHOST: 192.168.1.105
 [+] Configurando LPORT: 4444
 [+] Construindo payload evasivo...
@@ -42,7 +42,7 @@ cd VenomForge-v1
 python3 venomforge.py --install
 ```
 
-## 📌 Guia de Uso
+## 📌 Como Usar
 
 1. **Configuração Inicial**:
    ```bash
@@ -54,45 +54,28 @@ python3 venomforge.py --install
    python3 venomforge.py --generate
    ```
 
-3. **Opções Avançadas**:
+3. **Listener Automático**:
    ```bash
-   python3 venomforge.py --advanced
+   python3 venomforge.py --listen
    ```
 
-## 🧩 Requisitos do Sistema
-
-| Componente | Versão Mínima |
-|------------|---------------|
-| Termux     | 0.118+        |
-| Python     | 3.9+          |
-| Storage    | 500MB livres  |
-| RAM        | 2GB+          |
-
 ## ⚠️ Aviso Legal
-Este projeto destina-se **exclusivamente** para:
+Este software é destinado exclusivamente para:
 - Testes de penetração autorizados
 - Pesquisa em segurança cibernética
 - Educação em defesa digital
 
-**O uso indevido é estritamente proibido.**
+**O uso não autorizado é ilegal.**
 
 ## 🤝 Contribuição
-Contribuições são bem-vindas! Siga nosso guia:
-1. Fork o repositório
-2. Crie sua branch (`git checkout -b feature/incrivel`)
-3. Commit suas mudanças (`git commit -am 'Add incrível feature'`)
-4. Push para a branch (`git push origin feature/incrivel`)
-5. Abra um Pull Request
-
-## 📌 Roadmap 2024
-- [X] Suporte a múltiplos payloads
-- [ ] Integração com Cloudflare Tunnels
-- [ ] Builder Web embutido
-- [ ] Modo Stealth avançado
+Contribuições são bem-vindas via:
+- Issues no GitHub
+- Pull Requests
+- Sugestões na comunidade
 
 ## 📜 Licença
-Distribuído sob licença MIT. Veja `LICENSE` para mais informações.
+MIT License - Consulte o arquivo LICENSE para detalhes.
 
 ---
-Desenvolvido com ❤️ por [Therac-25](https://github.com/Mtx-rng) | Mantido pela comunidade de segurança
+© 2024 Therac-25 | [GitHub](https://github.com/Mtx-rng)
 ```
