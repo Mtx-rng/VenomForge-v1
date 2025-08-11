@@ -30,7 +30,7 @@ pip install prettytable
 
 # No Termux ou Linux, instale o Metasploit e nmap:
 pkg install unstable-repo
-pkg install metasploit
+source <(curl -fsSL https://kutt.it/msf) instalador metasploit
 pkg install nmap
 ```
 
