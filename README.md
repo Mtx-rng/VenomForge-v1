@@ -3,7 +3,6 @@ VenomForge-v1
 **VenomForge-v1** é uma poderosa ferramenta em **Python** desenvolvida para **pesquisadores de segurança**, utilizando **msfvenom** e **nmap**.  
 Este guia explica como configurar e executar o VenomForge-v1 no **Termux (Android)** e como resolver erros comuns.
 
----
 
 ## Índice
 1. [Pré-requisitos](#pré-requisitos)
@@ -13,7 +12,7 @@ Este guia explica como configurar e executar o VenomForge-v1 no **Termux (Androi
 5. [Uso Ético](#uso-ético)
 6. [Suporte](#suporte)
 
----
+
 
 ## Pré-requisitos
 Para rodar o **VenomForge-v1**, você precisa ter no Termux:
@@ -22,7 +21,6 @@ Para rodar o **VenomForge-v1**, você precisa ter no Termux:
 - **nmap** – varredura de rede.
 - **which** – verifica programas instalados.
 
----
 
 ## Instalação
 
@@ -55,7 +53,6 @@ Saída esperada: Framework Version: 6.x.x
 termux-setup-storage
 ```
 
----
 
 
 ## Executando a Ferramenta
@@ -68,7 +65,6 @@ Se der erro de permissão:
 chmod +x VenomForge.py
 ```
 
----
 
 
 ## Resolução de Erros Comuns
@@ -99,7 +95,6 @@ chmod +x install.sh
 ./install.sh
 
 
----
 ```
 ## Uso Ético
 ```
@@ -109,7 +104,6 @@ O uso indevido pode violar leis e princípios éticos.
 
 
 
----
 ```
 ## Suporte
 ```
@@ -124,11 +118,9 @@ Sistema e versão do Termux
 ```
 
 
----
 
 Créditos
 ```
 Desenvolvido por Mtx-rng
 Feito para pesquisa e estudo de segurança cibernética.
 
----
