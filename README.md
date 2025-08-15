@@ -1,74 +1,134 @@
-# VenomForge 2.0
+VenomForge-v1
 
-VenomForge é um gerador moderno e interativo de payloads para Metasploit, desenvolvido para facilitar a criação rápida de arquivos maliciosos para pentest e testes de segurança. Com interface colorida, menus intuitivos e suporte a múltiplos sistemas operacionais, o VenomForge torna o processo de geração de payloads simples e eficiente.
-
-## Características
-
-- **Interface interativa e colorida no terminal**
-- **Geração de payloads para Windows, Linux, Android, MacOS e iOS**
-- **Validação automática de dependências**
-- **Simulação de gerenciamento de sessões e utilitários**
-- **Compatível com Termux, Linux e ambientes Unix-like**
-- **Pronto para expansão de funcionalidades**
-
-## Pré-requisitos
-
-- **Python 3.x**
-- **Metasploit Framework** (`msfvenom` e `msfconsole` disponíveis no PATH)
-- **nmap** instalado
-- **prettytable** (instale com `pip install prettytable`)
-
-## Instalação
-
-```bash
-# Clone o repositório
-git clone https://github.com/Mtx-rng/VenomForge-v1.git
-cd VenomForge-v1
-
-# Instale o prettytable
-pip install prettytable
-
-# No Termux ou Linux, instale o Metasploit e nmap:
-pkg install unstable-repo
-source <(curl -fsSL https://kutt.it/msf) instalador metasploit
-pkg install nmap
-```
-
-## Uso
-
-```bash
-python VenomForge.py
-```
-
-Siga os menus interativos para gerar payloads.  
-Ao escolher um alvo, insira o IP (`LHOST`) e a porta (`LPORT`) para o payload.  
-O arquivo será salvo na pasta atual com o nome informado.
-
-### Exemplos de geração de payload
-
-- **Windows**: Gera um `.exe` Meterpreter Reverse TCP
-- **Linux**: Gera um `.elf` Meterpreter Reverse TCP
-- **Android**: Gera um `.apk` Meterpreter Reverse TCP
-- **MacOS**: Gera um binário `.macho`
-- **iOS**: Gera um binário `.bin` (experimenta, depende do suporte do msfvenom)
-
-## Segurança
-
-**ATENÇÃO:**  
-Este projeto é exclusivamente para fins educacionais e de testes em ambientes autorizados.  
-Não utilize o VenomForge para atividades ilegais ou sem permissão explícita dos donos dos sistemas alvo.
-
-Nunca compartilhe ou publique arquivos gerados em ambientes públicos não controlados!
-
-## Contribuição
-
-Sinta-se à vontade para abrir issues, sugerir melhorias ou enviar pull requests!
-
-## Licença
-
-MIT
+**VenomForge-v1** é uma poderosa ferramenta em **Python** desenvolvida para **pesquisadores de segurança**, utilizando **msfvenom** e **nmap**.  
+Este guia explica como configurar e executar o VenomForge-v1 no **Termux (Android)** e como resolver erros comuns.
 
 ---
 
-**Autor:** Therac-25  
-**GitHub:** [Mtx-rng](https://github.com/Mtx-rng)
+## Índice
+1. [Pré-requisitos](#pré-requisitos)
+2. [Instalação](#instalação)
+3. [Executando a Ferramenta](#executando-a-ferramenta)
+4. [Resolução de Erros Comuns](#resolução-de-erros-comuns)
+5. [Uso Ético](#uso-ético)
+6. [Suporte](#suporte)
+
+---
+
+## Pré-requisitos
+Para rodar o **VenomForge-v1**, você precisa ter no Termux:
+- **Python** – executa o script principal.
+- **msfvenom** – gera payloads (Metasploit Framework).
+- **nmap** – varredura de rede.
+- **which** – verifica programas instalados.
+
+---
+
+## Instalação
+
+### 1. Atualizar Termux
+```bash
+pkg update && pkg upgrade
+
+2. Instalar dependências
+
+pkg install python
+pkg install which
+pkg install nmap
+pkg install wget curl
+```
+
+3. Instalar Metasploit (inclui msfvenom)
+```bash
+curl -LO https://github.com/rapid7/metasploit-framework/raw/master/scripts/termux/install.sh
+chmod +x install.sh
+./install.sh
+
+Verificar:
+
+msfvenom --version
+
+Saída esperada: Framework Version: 6.x.x
+```
+4. Conceder permissão de armazenamento
+```
+termux-setup-storage
+```
+
+---
+
+
+## Executando a Ferramenta
+```
+cd ~/VenomForge-v1
+python VenomForge.py
+
+Se der erro de permissão:
+
+chmod +x VenomForge.py
+```
+
+---
+
+
+## Resolução de Erros Comuns
+```
+Erro: which: not found
+
+pkg install which
+
+Erro: Dependências ausentes: msfvenom, nmap
+
+which nmap
+which msfvenom
+
+Se o msfvenom não aparecer:
+
+export PATH=$PATH:$HOME/metasploit-framework
+echo 'export PATH=$PATH:$HOME/metasploit-framework' >> ~/.bashrc
+source ~/.bashrc
+
+Erro: msfvenom: version unknown
+
+pkg install ruby
+ruby --version
+pkg uninstall metasploit-framework
+rm -rf $HOME/metasploit-framework
+curl -LO https://github.com/rapid7/metasploit-framework/raw/master/scripts/termux/install.sh
+chmod +x install.sh
+./install.sh
+
+
+---
+```
+## Uso Ético
+```
+> ATENÇÃO: O VenomForge-v1 deve ser usado apenas para testes de segurança autorizados.
+O uso indevido pode violar leis e princípios éticos.
+
+
+
+
+---
+```
+## Suporte
+```
+📌 Repositório Oficial: https://github.com/Mtx-rng/VenomForge-v1
+Abra uma issue no GitHub informando:
+
+Mensagem de erro completa
+
+Saída dos comandos executados
+
+Sistema e versão do Termux
+```
+
+
+---
+
+Créditos
+```
+Desenvolvido por Mtx-rng
+Feito para pesquisa e estudo de segurança cibernética.
+
+---
