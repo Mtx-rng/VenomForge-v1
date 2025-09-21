@@ -34,6 +34,7 @@ pkg install python
 pkg install which
 pkg install nmap
 pkg install wget curl
+pip install prettytable
 ```
 
 3. Instalar Metasploit (inclui msfvenom)
