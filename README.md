@@ -27,9 +27,9 @@ Para rodar o **VenomForge-v1**, você precisa ter no Termux:
 ### 1. Atualizar Termux
 ```bash
 pkg update && pkg upgrade
-
-2. Instalar dependências
-
+```
+### 2. Instalar dependências
+```
 pkg install python
 pkg install which
 pkg install nmap
@@ -59,9 +59,9 @@ termux-setup-storage
 ```
 cd ~/VenomForge-v1
 python VenomForge.py
-
-Se der erro de permissão:
-
+```
+### Se der erro de permissão:
+```
 chmod +x VenomForge.py
 ```
 
@@ -77,9 +77,9 @@ Erro: Dependências ausentes: msfvenom, nmap
 
 which nmap
 which msfvenom
-
+```
 Se o msfvenom não aparecer:
-
+```
 export PATH=$PATH:$HOME/metasploit-framework
 echo 'export PATH=$PATH:$HOME/metasploit-framework' >> ~/.bashrc
 source ~/.bashrc
