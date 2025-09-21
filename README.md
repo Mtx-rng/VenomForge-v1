@@ -41,9 +41,9 @@ pkg install wget curl
 curl -LO https://github.com/rapid7/metasploit-framework/raw/master/scripts/termux/install.sh
 chmod +x install.sh
 ./install.sh
-
-Verificar:
-
+```
+### Verificar:
+```
 msfvenom --version
 
 Saída esperada: Framework Version: 6.x.x
