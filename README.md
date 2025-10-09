@@ -27,6 +27,8 @@ Para rodar o **VenomForge-v1**, você precisa ter no Termux:
 ### 1. Atualizar Termux
 ```bash
 pkg update && pkg upgrade
+pkg install git
+git clone https://github.com/Mtx-rng/VenomForge-v1.git
 ```
 ### 2. Instalar dependências
 ```
@@ -39,9 +41,14 @@ pip install prettytable
 
 3. Instalar Metasploit (inclui msfvenom)
 ```bash
-curl -LO https://github.com/rapid7/metasploit-framework/raw/master/scripts/termux/install.sh
-chmod +x install.sh
-./install.sh
+pkg install wget
+
+wget https://github.com/gushmazuko/metasploit_in_termux/raw/master/metasploit.sh
+
+
+chmod +x metasploit.sh
+
+./metasploit.sh
 ```
 ### Verificar:
 ```
